@@ -4132,6 +4132,8 @@ table.wc-shipping-classes {
 		ul {
 			position: relative;
 			padding-right: 32px;
+			display: flex;
+			flex-wrap: wrap;
 
 			li {
 				color: #555;
@@ -4141,8 +4143,8 @@ table.wc-shipping-classes {
 		}
 
 		.wc-shipping-zone-method {
-			background-color: #dcdcde;
-			margin: 0 3px 0 0;
+			background-color: #dcdcdc;
+			margin: 0 3px 3px 0;
 			padding: 5px 9px;
 			border-radius: 5px;
 		}
