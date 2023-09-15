@@ -333,7 +333,7 @@ class OrdersTableQuery {
 
 		// Convert YYYY-MM-DD to UTC timestamp. Per https://github.com/woocommerce/woocommerce/wiki/wc_get_orders-and-WC_Order_Query#date only date is relevant (time is ignored).
 		foreach ( $dates_raw as &$raw_date ) {
-			$raw_date = strtotime( get_gmt_from_date( date( 'Y-m-d', strtotime( $raw_date ) ) ) );
+			$raw_date = is_numeric( $raw_date ) ? $raw_date : strtotime( get_gmt_from_date( date( 'Y-m-d', strtotime( $raw_date ) ) ) );
 		}
 
 		$date1  = end( $dates_raw );
