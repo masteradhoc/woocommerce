@@ -96,7 +96,7 @@ if ( ! class_exists( 'WC_Admin_Settings', false ) ) :
 		 *
 		 * @internal For exclusive usage within this class, backwards compatibility not guaranteed.
 		 */
-		public static function reset_settings_pages_on_feature_change( $feature_id, $is_enabled ) {
+		public static function reset_settings_pages_on_feature_change( $feature_id, $is_enabled ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 			if ( 'point_of_sale' === $feature_id ) {
 				self::$settings = array();
 				self::get_settings_pages();
