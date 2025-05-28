@@ -1,0 +1,7 @@
+{
+    "github": {
+        "repo_owner": "*** main repo owner goes here ***",
+        "repo_name": "woocommerce",
+        "api_key": "*** GitHub API key with repository access, or leave as null if you'll use a GITHUB_KEY environment item"
+    }
+}
