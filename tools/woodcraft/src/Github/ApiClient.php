@@ -11,17 +11,12 @@ class ApiClient
     public function __construct(private ?HttpClient $http_client = null, private ?Config $config = null) {
         $this->http_client ??= new HttpClient();
         $this->config ??= new Config();
-
-        $this->github_key = $config->github_key;
     }
 
     public function get_open_milestones(): array {
-
-        $owner = $this->config->repo_owner;
-        $name = $this->config->repo_name;
         $query = <<<MSX
-query {
-  repository(owner: "{$owner}", name: "{$name}") {
+query(\$owner: String!, \$name: String!) {
+  repository(owner: \$owner, name: \$name) {
     milestones(first: 100, states: OPEN) {
       nodes {
         id
@@ -33,7 +28,12 @@ query {
   }
 }
 MSX;
-        $result = $this->do_graphql($query);
+        $variables = [
+            'owner' => $this->config->repo_owner,
+            'name' => $this->config->repo_name
+        ];
+
+        $result = $this->do_graphql($query, $variables);
         return $result['data']['repository']['milestones']['nodes'];
     }
 

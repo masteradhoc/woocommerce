@@ -63,11 +63,13 @@ class Status extends CommandBase {
         $future_main_version = null;
         $next_main_version = null;
         $more_than_two_main_versions = false;
+        $maintenance_versions = [];
 
         foreach($milestones as $milestone) {
             $title = $milestone['title'];
             $is_main_version = str_ends_with($title, '.0');
             if(!$is_main_version) {
+                $maintenance_versions[] = $title;
                 continue;
             }
 
