@@ -80,19 +80,14 @@ class ProductTemplate extends AbstractBlock {
 		$classnames .= ' wc-block-product-template';
 
 		//Apply blockGap styles manually for flow layout
-		if ( isset( $block->context['displayLayout']['type'] ) && 'flow' ) {
-			$block_gap_styles = StyleAttributesUtils::get_classes_and_styles_by_attributes( $attributes, [ 'block_gap' ] );
-					
-			$extra_attributes = array( 'class' => trim( $classnames ) );
-
-			// Apply blockGap styles if they exist
-			if ( ! empty( $block_gap_styles['styles'] ) ) {
-				$extra_attributes['style'] = $block_gap_styles['styles'];
-			}
-
-			$wrapper_attributes = get_block_wrapper_attributes( $extra_attributes );
+		$block_gap_styles = StyleAttributesUtils::get_classes_and_styles_by_attributes( $attributes, [ 'block_gap' ] );
+		$extra_attributes = array( 'class' => trim( $classnames ) );
+		if ( isset( $block->context['displayLayout']['type'] ) && 'flex' === $block->context['displayLayout']['type'] && ! empty( $block_gap_styles['styles'] ) ) {	
+			$extra_attributes['style'] = $block_gap_styles['styles'];
 		}
 
+		$wrapper_attributes = get_block_wrapper_attributes( $extra_attributes );
+		
 		$content = '';
 		while ( $query->have_posts() ) {
 			$query->the_post();
