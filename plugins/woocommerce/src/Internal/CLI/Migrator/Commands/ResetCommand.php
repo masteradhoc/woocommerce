@@ -69,3 +69,4 @@ class ResetCommand {
 		WP_CLI::success( "Credentials for the '{$platform}' platform have been cleared." );
 	}
 }
+ 

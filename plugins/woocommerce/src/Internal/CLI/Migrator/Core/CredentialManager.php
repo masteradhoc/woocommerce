@@ -117,3 +117,4 @@ class CredentialManager {
 		return trim( fgets( STDIN ) );
 	}
 }
+ 

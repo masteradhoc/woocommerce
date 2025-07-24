@@ -168,3 +168,4 @@ class CredentialManagerTest extends \WC_Unit_Test_Case {
 		$this->assertTrue( is_callable( array( $this->credential_manager, 'setup_credentials' ) ) );
 	}
 }
+ 
