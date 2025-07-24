@@ -163,7 +163,7 @@ class WC_Gateway_Paypal extends WC_Payment_Gateway {
 	/**
 	 * Get the blog token.
 	 *
-	 * @return string
+	 * @return string|null The blog token, or null if the blog is not connected to Jetpack.
 	 */
 	public function get_blog_token() {
 		if ( ! isset( $this->jetpack_connection_manager ) ) {
