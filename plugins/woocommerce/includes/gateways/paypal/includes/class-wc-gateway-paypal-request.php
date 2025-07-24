@@ -7,8 +7,9 @@
 
 declare(strict_types=1);
 
-use Automattic\WooCommerce\Utilities\NumberUtil;
+use Automattic\Jetpack\Connection\Client as Jetpack_Connection_Client;
 use Automattic\WooCommerce\Enums\OrderStatus;
+use Automattic\WooCommerce\Utilities\NumberUtil;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -117,6 +118,20 @@ class WC_Gateway_Paypal_Request {
 					'body'    => wp_json_encode( $request_body ),
 				)
 			);
+
+			/* phpcs:disable Generic.Commenting.Todo.TaskFound,Squiz.PHP.CommentedOutCode.Found
+			// TODO: Uncomment when the wpcom endpoint is ready.
+			$response = Jetpack_Connection_Client::wpcom_json_api_request_as_blog(
+				'/wc-gateway-paypal-proxy/create-order',
+				2,
+				array(
+					'headers' => array( 'Content-Type' => 'application/json' ),
+					'method'  => 'POST',
+				),
+				wp_json_encode( $request_body ),
+				'wpcom'
+			);
+			*/
 
 			if ( is_wp_error( $response ) ) {
 				throw new Exception( 'PayPal order creation failed. Response error: ' . $response->get_error_message() );
@@ -241,6 +256,11 @@ class WC_Gateway_Paypal_Request {
 		// phpcs:ignore Generic.Commenting.Todo.TaskFound
 		// TODO: This will be replaced with a constant pointing to the wpcom endpoint.
 		return get_site_url( null, 'wp-json/wc/v3/paypal-proxy/create-order' );
+
+		/* phpcs:ignore Generic.Commenting.Todo.TaskFound,Squiz.PHP.CommentedOutCode.Found
+		// TODO: Uncomment when the wpcom endpoint is ready.
+		return 'https://public-api.wordpress.com/wpcom/v2/wc-gateway-paypal-proxy/create-order';
+		*/
 	}
 
 	/**
@@ -405,10 +425,8 @@ class WC_Gateway_Paypal_Request {
 			if ( mb_strlen( $string ) > $limit ) {
 				$string = mb_strimwidth( $string, 0, $str_limit ) . '...';
 			}
-		} else {
-			if ( strlen( $string ) > $limit ) {
+		} elseif ( strlen( $string ) > $limit ) {
 				$string = substr( $string, 0, $str_limit ) . '...';
-			}
 		}
 		return $string;
 	}
@@ -484,7 +502,6 @@ class WC_Gateway_Paypal_Request {
 			),
 			$order
 		);
-
 	}
 
 	/**

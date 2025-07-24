@@ -84,7 +84,7 @@ class WC_Gateway_Paypal extends WC_Payment_Gateway {
 	 *
 	 * @var Jetpack_Connection_Manager
 	 */
-	protected $jetpack_connection_manager;
+	private $jetpack_connection_manager;
 
 
 	/**
@@ -149,6 +149,34 @@ class WC_Gateway_Paypal extends WC_Payment_Gateway {
 	}
 
 	/**
+	 * Check if Jetpack is connected.
+	 *
+	 * @return bool
+	 */
+	public function is_jetpack_connected() {
+		if ( ! isset( $this->jetpack_connection_manager ) ) {
+			$this->jetpack_connection_manager = new Jetpack_Connection_Manager( 'woocommerce' );
+		}
+		return $this->jetpack_connection_manager->is_connected();
+	}
+
+	/**
+	 * Get the blog token.
+	 *
+	 * @return string
+	 */
+	public function get_blog_token() {
+		if ( ! isset( $this->jetpack_connection_manager ) ) {
+			$this->jetpack_connection_manager = new Jetpack_Connection_Manager( 'woocommerce' );
+		}
+		$blog_token = $this->jetpack_connection_manager->get_tokens()->get_access_token();
+		if ( is_wp_error( $blog_token ) || empty( $blog_token ) ) {
+			return null;
+		}
+		return $blog_token->secret;
+	}
+
+	/**
 	 * Register the site with WPCOM if it is not already registered.
 	 *
 	 * @return void
@@ -161,10 +189,7 @@ class WC_Gateway_Paypal extends WC_Payment_Gateway {
 			return;
 		}
 
-		$this->jetpack_connection_manager = new Jetpack_Connection_Manager( 'woocommerce' );
-		$is_connected                     = $this->jetpack_connection_manager->is_connected();
-
-		if ( $is_connected ) {
+		if ( $this->is_jetpack_connected() ) {
 			return;
 		}
 
