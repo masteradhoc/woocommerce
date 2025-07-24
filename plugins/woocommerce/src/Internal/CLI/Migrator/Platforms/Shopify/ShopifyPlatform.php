@@ -46,4 +46,3 @@ class ShopifyPlatform {
 		return $platforms;
 	}
 }
- 

@@ -70,4 +70,3 @@ class SetupCommand {
 		WP_CLI::success( 'Credentials saved successfully.' );
 	}
 }
- 
