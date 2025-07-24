@@ -106,6 +106,12 @@ test.describe( 'Add to Cart + Options Block', () => {
 	} ) => {
 		await pageObject.updateSingleProductTemplate();
 
+		// We insert the blockified Prodcut Details block to test that it updates
+		// with the correct variation data.
+		await editor.insertBlock( {
+			name: 'woocommerce/product-details',
+		} );
+
 		await editor.saveSiteEditorEntities( {
 			isOnlyCurrentEntityDirty: true,
 		} );
@@ -136,10 +142,14 @@ test.describe( 'Add to Cart + Options Block', () => {
 		await test.step( 'updates stock indicator and product price when attributes are selected', async () => {
 			await expect( productPrice ).toHaveText( /\$42.00 – \$45.00.*/ );
 			await expect( page.getByText( '100 in stock' ) ).toBeVisible();
+			await expect( page.getByText( 'SKU: woo-hoodie' ) ).toBeVisible();
 
 			await colorBlueOption.click();
 			await logoNoOption.click();
 
+			await expect(
+				page.getByText( 'SKU: woo-hoodie-blue' )
+			).toBeVisible();
 			await expect( page.getByText( 'Out of stock' ) ).toBeVisible();
 			await expect( productPrice ).toHaveText( '$45.00' );
 		} );
