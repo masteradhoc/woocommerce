@@ -52,6 +52,7 @@ class StoreNotices extends AbstractBlock {
 			get_block_wrapper_attributes(
 				array(
 					'class' => 'wc-block-store-notices woocommerce ' . esc_attr( $classes_and_styles['classes'] ),
+					'role'  => 'status',
 				)
 			),
 			wc_kses_notice( $notices )
